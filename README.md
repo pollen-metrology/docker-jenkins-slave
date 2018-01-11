@@ -23,7 +23,7 @@ docker run -p 2222:22 jenkins_slave -url <url> <secret> <agent name> -disableHtt
 
 ## More
 
-Free inspired by:
+Freely inspired by:
 * https://github.com/shufo/jenkins-slave-ubuntu/blob/master/Dockerfile
 * https://github.com/jenkinsci/docker-slave
 * https://github.com/jenkinsci/docker-jnlp-slave
