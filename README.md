@@ -3,7 +3,7 @@ Jenkins Agent Docker image
 
 ## Getting started
 
-```
+```bash
 # be careful the arguments order is important
 docker build -t jenkins_slave .
 docker run -p 2222:22 jenkins_slave -url <url> <secret> <agent name> -disableHttpsCertValidation
