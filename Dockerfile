@@ -80,12 +80,6 @@ RUN cd /home/phabricator && git clone https://github.com/phacility/libphutil.git
 # Hack for multiplatform support of Phabricator Jenkins plugin
 RUN ln -s /home/phabricator/arcanist/bin/arc /home/phabricator/arcanist/bin/arc.bat
 
-# Add user jenkins to sudoers with NOPASSWD
-#RUN echo "jenkins ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
-
-# Set password for the jenkins user (you may want to alter this).
-#RUN echo "jenkins:jenkins" | chpasswd
-
 # Setting for sshd
 RUN sed -i 's|session    required     pam_loginuid.so|session    optional     pam_loginuid.so|g' /etc/pam.d/sshd
 
