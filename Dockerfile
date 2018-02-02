@@ -1,4 +1,4 @@
-# The MIT License
+#The MIT License
 #
 #  Copyright (c) 2015-2018, CloudBees, Inc. and other Jenkins contributors
 #
@@ -40,14 +40,23 @@ RUN apt-get install -y --no-install-recommends default-jdk
 # Install utilities
 RUN apt-get install -y git wget curl python-virtualenv python-pip build-essential python-dev
 
+RUN apt install -y libeigen3-dev libxt-dev libtiff-dev libpng-dev libjpeg-dev libopenblas-dev \
+	xvfb
+
+# QT5 development
+RUN apt install -y qttools5-dev-tools libqt5opengl5-dev libqt5svg5-dev \
+libqt5webkit5-dev libqt5xmlpatterns5-dev libqt5xmlpatterns5-private-dev \
+qt5-default qtbase5-dev qtbase5-dev-tools qtchooser \
+qtdeclarative5-dev qtscript5-dev qttools5-dev qttools5-private-dev
+
 # Install compilation utilities
-RUN apt-get install -y g++-5 cmake
+RUN apt-get install -y g++-5 cmake lsb-core doxygen cppcheck 
 
 # Install LaTex environment needed for documentation compilation
 RUN apt install -y texlive texlive-base texlive-bibtex-extra texlive-binaries texlive-extra-utils \
 texlive-font-utils texlive-fonts-recommended texlive-generic-extra texlive-generic-recommended \
 texlive-lang-french texlive-latex-base texlive-latex-extra texlive-latex-recommended \
-texlive-pictures texlive-pstricks texlive-science
+texlive-pictures texlive-pstricks texlive-science biber latexmk
 
 # Install node
 RUN curl -sL https://deb.nodesource.com/setup_8.x | bash -
@@ -61,13 +70,18 @@ RUN apt-get update && apt-get install yarn
 #### CHECK
 
 # Add user jenkins to the image
-RUN adduser --quiet jenkins
+RUN adduser --system --quiet jenkins
+
+# Install Phabricator-related tools
+RUN mkdir -p /home/phabricator
+RUN cd /home/phabricator && git clone https://github.com/phacility/arcanist.git
+RUN cd /home/phabricator && git clone https://github.com/phacility/libphutil.git
 
 # Add user jenkins to sudoers with NOPASSWD
-RUN echo "jenkins ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
+#RUN echo "jenkins ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
 
 # Set password for the jenkins user (you may want to alter this).
-RUN echo "jenkins:jenkins" | chpasswd
+#RUN echo "jenkins:jenkins" | chpasswd
 
 # Setting for sshd
 RUN sed -i 's|session    required     pam_loginuid.so|session    optional     pam_loginuid.so|g' /etc/pam.d/sshd
@@ -89,11 +103,14 @@ VOLUME /home/jenkins/.jenkins
 VOLUME ${AGENT_WORKDIR}
 WORKDIR /home/jenkins
 
+RUN mkdir -p /home/pollen && ln -s /home/pollen /pollen
+
 # Standard SSH port
 EXPOSE 22
 
 # If you put this label at the beginning of the Dockerfile, docker seems to use cache and build fails more often
 LABEL Description="This is a base image, which provides the Jenkins agent executable (slave.jar)" Vendor="Jenkins project" Version="3.15"
 
-COPY jenkins-slave.sh /usr/local/bin/jenkins-slave.sh
-ENTRYPOINT ["jenkins-slave.sh"]
+COPY jenkins-slave.sh /usr/bin/jenkins-slave.sh
+RUN chmod +x /usr/bin/jenkins-slave.sh
+ENTRYPOINT ["/usr/bin/jenkins-slave.sh"]
