@@ -41,7 +41,7 @@ RUN apt-get install -y --no-install-recommends default-jdk
 RUN apt-get install -y git wget curl python-virtualenv python-pip build-essential python-dev
 
 RUN apt install -y libeigen3-dev libxt-dev libtiff-dev libpng-dev libjpeg-dev libopenblas-dev \
-	xvfb
+	xvfb libusb-dev
 
 # QT5 development
 RUN apt install -y qttools5-dev-tools libqt5opengl5-dev libqt5svg5-dev \
@@ -76,6 +76,9 @@ RUN adduser --system --quiet jenkins
 RUN mkdir -p /home/phabricator
 RUN cd /home/phabricator && git clone https://github.com/phacility/arcanist.git
 RUN cd /home/phabricator && git clone https://github.com/phacility/libphutil.git
+
+# Hack for multiplatform support of Phabricator Jenkins plugin
+RUN ln -s /home/phabricator/arcanist/bin/arc /home/phabricator/arcanist/bin/arc.bat
 
 # Add user jenkins to sudoers with NOPASSWD
 #RUN echo "jenkins ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
@@ -113,4 +116,5 @@ LABEL Description="This is a base image, which provides the Jenkins agent execut
 
 COPY jenkins-slave.sh /usr/bin/jenkins-slave.sh
 RUN chmod +x /usr/bin/jenkins-slave.sh
+
 ENTRYPOINT ["/usr/bin/jenkins-slave.sh"]
