@@ -38,7 +38,7 @@ RUN mkdir -p /var/run/sshd
 RUN apt-get install -y --no-install-recommends default-jdk
 
 # Install utilities
-RUN apt-get install -y git wget curl python-virtualenv python-pip build-essential python-dev
+RUN apt-get install -y git wget curl python-virtualenv python-pip build-essential python-dev graphviz
 
 RUN apt install -y libeigen3-dev libxt-dev libtiff-dev libpng-dev libjpeg-dev libopenblas-dev \
 	xvfb libusb-dev
