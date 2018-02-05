@@ -80,7 +80,7 @@ RUN cd /home/phabricator && git clone https://github.com/phacility/libphutil.git
 
 # Hack for multiplatform support of Phabricator Jenkins plugin
 RUN mv /home/phabricator/arcanist/bin/arc.bat /home/phabricator/arcanist/bin/arc.bat.old
-RUN ln -s /home/phabricator/arcanist/bin/arc /home/phabricator/arcanist/bin/arc.bat
+RUN ln -s /home/phabricator/arcanist/bin/arc /usr/bin/arc.bat
 
 # Setting for sshd
 RUN sed -i 's|session    required     pam_loginuid.so|session    optional     pam_loginuid.so|g' /etc/pam.d/sshd
