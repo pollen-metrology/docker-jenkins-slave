@@ -50,7 +50,7 @@ qt5-default qtbase5-dev qtbase5-dev-tools qtchooser \
 qtdeclarative5-dev qtscript5-dev qttools5-dev qttools5-private-dev
 
 # Install compilation utilities
-RUN apt-get install -y g++-5 cmake lsb-core doxygen cppcheck 
+RUN apt-get install -y g++-5 cmake lsb-core doxygen 
 
 # Install LaTex environment needed for documentation compilation
 RUN apt install -y texlive texlive-base texlive-bibtex-extra texlive-binaries texlive-extra-utils \
@@ -103,9 +103,6 @@ VOLUME ${AGENT_WORKDIR}
 WORKDIR /home/jenkins
 
 RUN mkdir -p /home/pollen && ln -s /home/pollen /pollen
-
-# Standard SSH port
-EXPOSE 22
 
 # If you put this label at the beginning of the Dockerfile, docker seems to use cache and build fails more often
 LABEL Description="This is a base image, which provides the Jenkins agent executable (slave.jar)" Vendor="Jenkins project" Version="3.15"
