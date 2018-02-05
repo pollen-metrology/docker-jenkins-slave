@@ -58,6 +58,17 @@ texlive-font-utils texlive-fonts-recommended texlive-generic-extra texlive-gener
 texlive-lang-french texlive-latex-base texlive-latex-extra texlive-latex-recommended \
 texlive-pictures texlive-pstricks texlive-science biber latexmk
 
+# Install last fresh cppcheck binary
+
+RUN cd / tmp && wget https://github.com/danmar/cppcheck/archive/1.82.tar.gz;  \
+	tar zxvf 1.82.tar.gz && \
+	cd cppcheck-1.82 && \
+	make -j4 && \
+	make install PREFIX=/usr&& \
+	cd .. && \
+	rm -rf 1.82.tar.gz cppcheck-1.82
+
+
 # Install node
 RUN curl -sL https://deb.nodesource.com/setup_8.x | bash -
 RUN apt-get install -y nodejs
