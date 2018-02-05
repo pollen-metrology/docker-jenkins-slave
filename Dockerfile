@@ -73,6 +73,7 @@ RUN apt-get update && apt-get install yarn
 RUN adduser --system --quiet jenkins
 
 # Install Phabricator-related tools
+RUN apt install -y php7.0-cli php7.0-curl
 RUN mkdir -p /home/phabricator
 RUN cd /home/phabricator && git clone https://github.com/phacility/arcanist.git
 RUN cd /home/phabricator && git clone https://github.com/phacility/libphutil.git
