@@ -30,10 +30,6 @@ MAINTAINER Thibault Friedrich <thibaut.friedrich@pollen-metrology.com>
 
 RUN apt-get update
 
-# Install ssh server
-RUN apt-get install -y openssh-server
-RUN mkdir -p /var/run/sshd
-
 # Install JDK 7 (latest edition)
 RUN apt-get install -y --no-install-recommends default-jdk
 
@@ -92,11 +88,6 @@ RUN cd /home/phabricator && git clone https://github.com/phacility/libphutil.git
 # Hack for multiplatform support of Phabricator Jenkins plugin
 RUN mv /home/phabricator/arcanist/bin/arc.bat /home/phabricator/arcanist/bin/arc.bat.old
 RUN ln -s /home/phabricator/arcanist/bin/arc /usr/bin/arc.bat
-
-# Setting for sshd
-RUN sed -i 's|session    required     pam_loginuid.so|session    optional     pam_loginuid.so|g' /etc/pam.d/sshd
-
-RUN chmod -x /etc/update-motd.d/10-help-text
 
 ARG VERSION=3.15
 ARG AGENT_WORKDIR=/home/jenkins/agent

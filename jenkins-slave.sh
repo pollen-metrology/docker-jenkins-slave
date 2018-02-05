@@ -30,7 +30,6 @@
 # * JENKINS_AGENT_NAME : agent name, if not set as an argument
 # * JENKINS_AGENT_WORKDIR : agent work directory, if not set by optional parameter -workDir
 
-
 if [ $# -eq 1 ]; then
 
 	# if `docker run` only has one arguments, we assume user is running alternate command like `bash` to inspect the image
