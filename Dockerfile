@@ -21,7 +21,7 @@
 #  THE SOFTWARE.
 
 FROM ubuntu:16.04
-MAINTAINER Thibault Friedrich <thibaut.friedrich@pollen-metrology.com>
+MAINTAINER Thibault Friedrich <thibault.friedrich@pollen-metrology.com>
 
 # https://docs.docker.com/get-started/part2/#build-the-app
 # https://github.com/shufo/jenkins-slave-ubuntu/blob/master/Dockerfile
@@ -46,7 +46,7 @@ qt5-default qtbase5-dev qtbase5-dev-tools qtchooser \
 qtdeclarative5-dev qtscript5-dev qttools5-dev qttools5-private-dev
 
 # Install compilation utilities
-RUN apt-get install -y g++-5 cmake lsb-core doxygen 
+RUN apt-get install -y g++-5 cmake lsb-core doxygen
 
 # Install LaTex environment needed for documentation compilation
 RUN apt install -y texlive texlive-base texlive-bibtex-extra texlive-binaries texlive-extra-utils \
