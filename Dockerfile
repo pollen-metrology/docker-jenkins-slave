@@ -34,7 +34,7 @@ RUN apt-get update
 RUN apt-get install -y --no-install-recommends default-jdk
 
 # Install utilities
-RUN apt-get install -y git wget curl python-virtualenv python-pip build-essential python-dev graphviz
+RUN apt-get install -y git wget curl python-virtualenv python-pip build-essential python-dev graphviz locales locales-all
 
 RUN apt install -y libeigen3-dev libxt-dev libtiff-dev libpng-dev libjpeg-dev libopenblas-dev \
 	xvfb libusb-dev
@@ -56,11 +56,12 @@ texlive-pictures texlive-pstricks texlive-science biber latexmk
 
 # Install last fresh cppcheck binary
 
+RUN apt install -y libpcre3-dev
 RUN cd / tmp && wget https://github.com/danmar/cppcheck/archive/1.82.tar.gz;  \
 	tar zxvf 1.82.tar.gz && \
 	cd cppcheck-1.82 && \
-	make -j4 && \
-	make install PREFIX=/usr&& \
+	make SRCDIR=build CFGDIR=/usr/bin/cfg HAVE_RULES=yes && \
+	make install PREFIX=/usr CFGDIR=/usr/share/cppcheck/ && \
 	cd .. && \
 	rm -rf 1.82.tar.gz cppcheck-1.82
 
@@ -108,6 +109,9 @@ RUN mkdir -p /home/pollen && ln -s /home/pollen /pollen
 
 # If you put this label at the beginning of the Dockerfile, docker seems to use cache and build fails more often
 LABEL Description="This is a base image, which provides the Jenkins agent executable (slave.jar)" Vendor="Jenkins project" Version="3.15"
+
+RUN echo 'LANG="en_US.UTF-8"' >> /etc/default/locale && /usr/sbin/update-locale LANG=en_US.UTF-8
+
 
 COPY jenkins-slave.sh /usr/bin/jenkins-slave.sh
 RUN chmod +x /usr/bin/jenkins-slave.sh
