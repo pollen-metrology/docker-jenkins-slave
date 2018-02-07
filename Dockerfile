@@ -76,6 +76,10 @@ RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add -
 RUN echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list
 RUN apt-get update && apt-get install yarn
 
+# Install chrome
+RUN apt-get install chromium-browser
+RUN update-alternatives --install /usr/bin/chrome chrome-browser /usr/bin/chromium-browser 100
+
 #### CHECK
 
 # Add user jenkins to the image
