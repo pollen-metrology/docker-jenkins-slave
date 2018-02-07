@@ -43,7 +43,8 @@ RUN apt install -y libeigen3-dev libxt-dev libtiff-dev libpng-dev libjpeg-dev li
 RUN apt install -y qttools5-dev-tools libqt5opengl5-dev libqt5svg5-dev \
 libqt5webkit5-dev libqt5xmlpatterns5-dev libqt5xmlpatterns5-private-dev \
 qt5-default qtbase5-dev qtbase5-dev-tools qtchooser \
-qtdeclarative5-dev qtscript5-dev qttools5-dev qttools5-private-dev
+qtdeclarative5-dev qtscript5-dev qttools5-dev qttools5-private-dev \
+libqt5websockets5-dev
 
 # Install compilation utilities
 RUN apt-get install -y g++-5 cmake lsb-core doxygen
