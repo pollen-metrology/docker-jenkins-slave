@@ -56,7 +56,6 @@ texlive-lang-french texlive-latex-base texlive-latex-extra texlive-latex-recomme
 texlive-pictures texlive-pstricks texlive-science biber latexmk
 
 # Install last fresh cppcheck binary
-
 RUN apt install -y libpcre3-dev
 RUN cd / tmp && wget https://github.com/danmar/cppcheck/archive/1.82.tar.gz;  \
 	tar zxvf 1.82.tar.gz && \

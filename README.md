@@ -3,11 +3,25 @@ Jenkins Agent Docker image
 
 ## Getting started
 
+You should create host volumes for workspace and development
+environment, which are not part of the Docker image.
+They will be mounted in the Docker container at runtime.
+
 ```bash
 # be careful the arguments order is important
-docker build -t jenkins_slave .
-docker run jenkins_slave -url <url> <secret> <agent name>
+sudo docker build -t jenkins_slave .
+sudo docker run  \
+        -d \
+        -v pollen-dev-env:/home/pollen  \
+        -v jenkins_workspace:/home/jenkins/workspace \
+        pollen-metrology/linux-jenkins-slave \
+        -url https://jenkins.pollen-metrology.com/ \
+        -workDir=/home/jenkins/agent \
+        <agent secret hash> \
+        <agent name>
 ```
+~
+
 
 ## Specifications
 
@@ -19,7 +33,6 @@ docker run jenkins_slave -url <url> <secret> <agent name>
 * install latex libraries
 * install node (v8.x)
 * install yarn (last version)
-* create a new sudoer user jenkin
 
 ## More
 
