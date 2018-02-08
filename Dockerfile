@@ -77,7 +77,7 @@ RUN echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources
 RUN apt-get update && apt-get install yarn
 
 # Install chrome
-RUN apt-get install chromium-browser
+RUN apt-get install -y chromium-browser
 RUN update-alternatives --install /usr/bin/chrome chrome-browser /usr/bin/chromium-browser 100
 
 #### CHECK
@@ -115,7 +115,11 @@ RUN mkdir -p /home/pollen && ln -s /home/pollen /pollen
 # If you put this label at the beginning of the Dockerfile, docker seems to use cache and build fails more often
 LABEL Description="This is a base image, which provides the Jenkins agent executable (slave.jar)" Vendor="Jenkins project" Version="3.15"
 
-RUN echo 'LANG="en_US.UTF-8"' >> /etc/default/locale && /usr/sbin/update-locale LANG=en_US.UTF-8
+# Set the locale
+RUN locale-gen en_US.UTF-8
+ENV LANG en_US.UTF-8
+ENV LANGUAGE en_US:en
+ENV LC_ALL en_US.UTF-8
 
 
 COPY jenkins-slave.sh /usr/bin/jenkins-slave.sh
