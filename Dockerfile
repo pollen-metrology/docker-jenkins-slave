@@ -47,7 +47,7 @@ qtdeclarative5-dev qtscript5-dev qttools5-dev qttools5-private-dev \
 libqt5websockets5-dev
 
 # Install compilation utilities
-RUN apt-get install -y g++-5 cmake lsb-core doxygen
+RUN apt-get install -y g++-5 cmake lsb-core doxygen lcov
 
 # Install LaTex environment needed for documentation compilation
 RUN apt install -y texlive texlive-base texlive-bibtex-extra texlive-binaries texlive-extra-utils \
