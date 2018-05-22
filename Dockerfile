@@ -39,6 +39,8 @@ RUN apt-get install -y git wget curl python-virtualenv python-pip build-essentia
 RUN apt install -y libeigen3-dev libxt-dev libtiff-dev libpng-dev libjpeg-dev libopenblas-dev \
 	xvfb libusb-dev
 
+RUN python -m pip install --upgrade pip conan
+
 # QT5 development
 RUN apt install -y qttools5-dev-tools libqt5opengl5-dev libqt5svg5-dev \
 libqt5webkit5-dev libqt5xmlpatterns5-dev libqt5xmlpatterns5-private-dev \
