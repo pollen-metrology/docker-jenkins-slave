@@ -100,7 +100,7 @@ RUN update-alternatives --install /usr/bin/chrome chrome-browser /usr/bin/chromi
 #### CHECK
 
 # Add user jenkins to the image
-RUN adduser --system --quiet jenkins --firstuid 2000 
+RUN adduser --system --quiet --uid 2222 --group --disabled-login jenkins
 
 # Install Phabricator-related tools
 RUN apt install -y php7.0-cli php7.0-curl
