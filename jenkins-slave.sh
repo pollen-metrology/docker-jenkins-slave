@@ -40,6 +40,13 @@ if [ $# -eq 1 ]; then
 
 else
 
+	# Special case to let a jenkins container running on the same host as the artifactory container talk to it.
+	if (host artifactory 2>/dev/null | grep 'artifactory has address' > /dev/null)
+	then
+		ARTIFACTIP=`host artifactory | head -1 | awk '/artifactory has address/ { print $4 }'`
+		echo "$ARTIFACTIP	artifactory.pollen-metrology.com" >> /etc/hosts
+	fi
+
 	# if -tunnel is not provided try env vars
 	case "$@" in
 		*"-tunnel "*) ;;

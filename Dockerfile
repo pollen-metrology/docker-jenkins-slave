@@ -34,7 +34,8 @@ RUN apt-get update
 RUN apt-get install -y --no-install-recommends default-jdk
 
 # Install utilities
-RUN apt-get install -y git wget curl python-virtualenv python-pip build-essential python-dev graphviz locales locales-all
+RUN apt-get install -y git wget curl python-virtualenv python-pip build-essential python-dev \
+	graphviz locales locales-all bind9-host iputils-ping
 
 RUN apt install -y libeigen3-dev libxt-dev libtiff-dev libpng-dev libjpeg-dev libopenblas-dev \
 	xvfb libusb-dev
