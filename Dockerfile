@@ -28,6 +28,7 @@ MAINTAINER Thibault Friedrich <thibault.friedrich@pollen-metrology.com>
 # https://github.com/jenkinsci/docker-slave
 # https://github.com/jenkinsci/docker-jnlp-slave
 
+RUN apt-get clean
 RUN apt-get update
 
 # Install JDK 7 (latest edition)
