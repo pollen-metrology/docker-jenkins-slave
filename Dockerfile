@@ -48,6 +48,16 @@ qt5-default qtbase5-dev qtbase5-dev-tools qtchooser \
 qtdeclarative5-dev qtscript5-dev qttools5-dev qttools5-private-dev \
 libqt5websockets5-dev
 
+# QT5 conan package building dependencies
+RUN apt install -y libgl1-mesa-dev libxcb1 libxcb1-dev \
+libx11-xcb1 libx11-xcb-dev libxcb-keysyms1 \
+libxcb-keysyms1-dev libxcb-image0 libxcb-image0-dev \
+libxcb-shm0 libxcb-shm0-dev libxcb-icccm4 \
+libxcb-icccm4-dev libxcb-sync1 libxcb-sync-dev \
+libxcb-xfixes0-dev libxrender-dev libxcb-shape0-dev \
+libxcb-randr0-dev libxcb-render-util0 libxcb-render-util0-dev \
+libxcb-glx0-dev libxcb-xinerama0 libxcb-xinerama0-dev
+
 # Install compilation utilities
 RUN apt-get install -y g++-5 cmake lsb-core doxygen lcov
 
