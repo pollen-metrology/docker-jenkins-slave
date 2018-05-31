@@ -59,6 +59,11 @@ libxcb-xfixes0-dev libxrender-dev libxcb-shape0-dev \
 libxcb-randr0-dev libxcb-render-util0 libxcb-render-util0-dev \
 libxcb-glx0-dev libxcb-xinerama0 libxcb-xinerama0-dev
 
+# VTK conan package building dependencies
+RUN apt install -y freeglut3-dev mesa-common-dev mesa-utils-extra \
+libgl1-mesa-dev libglapi-mesa libsm-dev libx11-dev libxext-dev \
+libxt-dev libglu1-mesa-dev
+
 # Install compilation utilities
 RUN apt-get install -y g++-5 cmake lsb-core doxygen lcov
 
