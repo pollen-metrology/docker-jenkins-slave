@@ -29,13 +29,13 @@ MAINTAINER Thibault Friedrich <thibault.friedrich@pollen-metrology.com>
 # https://github.com/jenkinsci/docker-jnlp-slave
 
 RUN apt-get clean
-RUN apt-get update
+RUN apt update
 
 # Install JDK 7 (latest edition)
-RUN apt-get install -y --no-install-recommends default-jdk
+RUN apt install -y --no-install-recommends default-jdk
 
 # Install utilities
-RUN apt-get install -y git wget curl python-virtualenv python-pip build-essential python-dev \
+RUN apt install -y git wget curl python-virtualenv python-pip build-essential python-dev \
 	graphviz locales locales-all bind9-host iputils-ping
 
 RUN apt install -y libeigen3-dev libxt-dev libtiff-dev libpng-dev libjpeg-dev libopenblas-dev \
@@ -68,7 +68,7 @@ libgl1-mesa-dev libglapi-mesa libsm-dev libx11-dev libxext-dev \
 libxt-dev libglu1-mesa-dev
 
 # Install compilation utilities
-RUN apt-get install -y g++-5 cmake lsb-core doxygen lcov
+RUN apt install -y g++-5 cmake lsb-core doxygen lcov
 
 # Install LaTex environment needed for documentation compilation
 RUN apt install -y texlive texlive-base texlive-bibtex-extra texlive-binaries texlive-extra-utils \
@@ -89,15 +89,15 @@ RUN cd / tmp && wget https://github.com/danmar/cppcheck/archive/1.82.tar.gz;  \
 
 # Install node
 RUN curl -sL https://deb.nodesource.com/setup_8.x | bash -
-RUN apt-get install -y nodejs
+RUN apt install -y nodejs
 
 # Install yarn
 RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add -
 RUN echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list
-RUN apt-get update && apt-get install yarn
+RUN apt update && apt install -y yarn
 
 # Install chrome
-RUN apt-get install -y chromium-browser
+RUN apt install -y chromium-browser
 RUN update-alternatives --install /usr/bin/chrome chrome-browser /usr/bin/chromium-browser 100
 
 #### CHECK
