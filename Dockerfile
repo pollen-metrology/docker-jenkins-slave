@@ -46,19 +46,21 @@ RUN python -m pip install --upgrade pip conan
 # QT5 development
 RUN apt install -y qttools5-dev-tools libqt5opengl5-dev libqt5svg5-dev \
 libqt5webkit5-dev libqt5xmlpatterns5-dev libqt5xmlpatterns5-private-dev \
-qt5-default qtbase5-dev qtbase5-dev-tools qtchooser \
-qtdeclarative5-dev qtscript5-dev qttools5-dev qttools5-private-dev \
-libqt5websockets5-dev
+qt5-default qtbase5-dev qtbase5-dev-tools qtchooser qtscript5-dev \
+qtdeclarative5-dev qttools5-dev qttools5-private-dev libqt5websockets5-dev
 
 # QT5 conan package building dependencies
 RUN apt install -y libgl1-mesa-dev libxcb1 libxcb1-dev \
-libx11-xcb1 libx11-xcb-dev libxcb-keysyms1 \
-libxcb-keysyms1-dev libxcb-image0 libxcb-image0-dev \
-libxcb-shm0 libxcb-shm0-dev libxcb-icccm4 \
-libxcb-icccm4-dev libxcb-sync1 libxcb-sync-dev \
-libxcb-xfixes0-dev libxrender-dev libxcb-shape0-dev \
+libx11-xcb1 libx11-xcb-dev libxcb-keysyms1 libdbus-1-dev \
+libxcb-keysyms1-dev libxcb-image0 libxcb-image0-dev libxtst-dev \
+libxcb-shm0 libxcb-shm0-dev libxcb-icccm4 libxi-dev libminizip-dev \
+libxcb-icccm4-dev libxcb-sync1 libxcb-sync-dev libxrandr-dev \
+libxcb-xfixes0-dev libxrender-dev libxcb-shape0-dev libxml2-dev \
 libxcb-randr0-dev libxcb-render-util0 libxcb-render-util0-dev \
-libxcb-glx0-dev libxcb-xinerama0 libxcb-xinerama0-dev
+libxcb-glx0-dev libxcb-xinerama0 libxcb-xinerama0-dev \
+libfontconfig1-dev libxcomposite-dev libxcursor-dev libxslt1-dev \
+libevent-dev libjsoncpp-dev protobuf-compiler libprotobuf-dev \
+libvpx-dev libsnappy-dev libnss3-dev 
 
 # VTK conan package building dependencies
 RUN apt install -y freeglut3-dev mesa-common-dev mesa-utils-extra \
@@ -128,7 +130,7 @@ VOLUME /home/jenkins/.jenkins
 VOLUME ${AGENT_WORKDIR}
 WORKDIR /home/jenkins
 
-RUN mkdir -p /home/pollen && ln -s /home/pollen /pollen
+RUN mkdir -p /home/pollen && chown jenkins:jenkins /home/pollen && ln -s /home/pollen /pollen
 
 # If you put this label at the beginning of the Dockerfile, docker seems to use cache and build fails more often
 LABEL Description="This is a base image, which provides the Jenkins agent executable (slave.jar)" Vendor="Jenkins project" Version="3.15"
