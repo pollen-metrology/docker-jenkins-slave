@@ -60,7 +60,8 @@ libxcb-randr0-dev libxcb-render-util0 libxcb-render-util0-dev \
 libxcb-glx0-dev libxcb-xinerama0 libxcb-xinerama0-dev \
 libfontconfig1-dev libxcomposite-dev libxcursor-dev libxslt1-dev \
 libevent-dev libjsoncpp-dev protobuf-compiler libprotobuf-dev \
-libvpx-dev libsnappy-dev libnss3-dev 
+libvpx-dev libsnappy-dev libnss3-dev bison libbison-dev \
+flex libfl-dev gperf
 
 # VTK conan package building dependencies
 RUN apt install -y freeglut3-dev mesa-common-dev mesa-utils-extra \
