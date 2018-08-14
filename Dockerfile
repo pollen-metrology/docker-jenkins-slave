@@ -20,7 +20,7 @@
 #  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 #  THE SOFTWARE.
 
-FROM ubuntu:16.04
+FROM ubuntu:18.04
 MAINTAINER Thibault Friedrich <thibault.friedrich@pollen-metrology.com>
 
 # https://docs.docker.com/get-started/part2/#build-the-app
@@ -31,7 +31,7 @@ MAINTAINER Thibault Friedrich <thibault.friedrich@pollen-metrology.com>
 RUN apt-get clean
 RUN apt update
 
-# Install JDK 7 (latest edition)
+# Install JDK latest edition
 RUN apt install -y --no-install-recommends default-jdk
 
 # Install utilities
@@ -42,12 +42,6 @@ RUN apt install -y libeigen3-dev libxt-dev libtiff-dev libpng-dev libjpeg-dev li
 	xvfb libusb-dev
 
 RUN python -m pip install --upgrade pip conan
-
-# QT5 development
-RUN apt install -y qttools5-dev-tools libqt5opengl5-dev libqt5svg5-dev \
-libqt5webkit5-dev libqt5xmlpatterns5-dev libqt5xmlpatterns5-private-dev \
-qt5-default qtbase5-dev qtbase5-dev-tools qtchooser qtscript5-dev \
-qtdeclarative5-dev qttools5-dev qttools5-private-dev libqt5websockets5-dev
 
 # QT5 conan package building dependencies
 RUN apt install -y libgl1-mesa-dev libxcb1 libxcb1-dev \
@@ -69,13 +63,13 @@ libgl1-mesa-dev libglapi-mesa libsm-dev libx11-dev libxext-dev \
 libxt-dev libglu1-mesa-dev
 
 # Install compilation utilities
-RUN apt install -y g++-5 cmake lsb-core doxygen lcov
+RUN apt install -y g++-5 cmake lsb-core doxygen lcov valgrind
 
 # Install LaTex environment needed for documentation compilation
-RUN apt install -y texlive texlive-base texlive-bibtex-extra texlive-binaries texlive-extra-utils \
-texlive-font-utils texlive-fonts-recommended texlive-generic-extra texlive-generic-recommended \
-texlive-lang-french texlive-latex-base texlive-latex-extra texlive-latex-recommended \
-texlive-pictures texlive-pstricks texlive-science biber latexmk
+#RUN apt install -y texlive texlive-base texlive-bibtex-extra texlive-binaries texlive-extra-utils \
+#texlive-font-utils texlive-fonts-recommended texlive-generic-extra texlive-generic-recommended \
+#texlive-lang-french texlive-latex-base texlive-latex-extra texlive-latex-recommended \
+#texlive-pictures texlive-pstricks texlive-science biber latexmk
 
 # Install last fresh cppcheck binary
 RUN apt install -y libpcre3-dev
@@ -107,7 +101,7 @@ RUN update-alternatives --install /usr/bin/chrome chrome-browser /usr/bin/chromi
 RUN adduser --system --quiet --uid 2222 --group --disabled-login jenkins
 
 # Install Phabricator-related tools
-RUN apt install -y php7.0-cli php7.0-curl
+RUN DEBIAN_FRONTEND=noninteractive apt install -y php7.2-cli php7.2-curl
 RUN mkdir -p /home/phabricator
 RUN cd /home/phabricator && git clone https://github.com/phacility/arcanist.git
 RUN cd /home/phabricator && git clone https://github.com/phacility/libphutil.git

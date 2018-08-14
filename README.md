@@ -9,12 +9,12 @@ They will be mounted in the Docker container at runtime.
 
 ```bash
 # be careful the arguments order is important
-sudo docker build -t jenkins_slave .
+sudo docker build -t pollen-metrology/jenkins_slave_v3 .
 sudo docker run  \
         -d \
         -v pollen-dev-env:/home/pollen  \
         -v jenkins_workspace:/home/jenkins/workspace \
-        pollen-metrology/linux-jenkins-slave \
+        pollen-metrology/jenkins_slave_v3 \
         -url https://jenkins.pollen-metrology.com/ \
         -workDir=/home/jenkins/agent \
         <agent secret hash> \
@@ -25,12 +25,11 @@ sudo docker run  \
 
 ## Specifications
 
-* based on Ubuntu 16.04
+* based on Ubuntu 18.04
 * install and start ssh server
 * install java, download slave.jar and connect to jenkins server
 * install python dependencies
 * install g++ compiler and cmake
-* install latex libraries
 * install node (v8.x)
 * install yarn (last version)
 
