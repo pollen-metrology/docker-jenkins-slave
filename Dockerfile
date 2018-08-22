@@ -57,7 +57,7 @@ libevent-dev libjsoncpp-dev protobuf-compiler libprotobuf-dev \
 libvpx-dev libsnappy-dev libnss3-dev bison libbison-dev \
 flex libfl-dev gperf libdbus-1-dev fontconfig libdrm-dev \
 libxcomposite-dev libxcursor-dev libxi-dev libxrandr-dev \
-xscreensaver libxtst-dev
+xscreensaver libxtst-dev libegl1-mesa-dev
 
 # VTK conan package building dependencies
 RUN apt install -y freeglut3-dev mesa-common-dev mesa-utils-extra \
