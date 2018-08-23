@@ -15,7 +15,7 @@ sudo docker run  \
         -v pollen-dev-env:/home/pollen  \
         -v jenkins_workspace:/home/jenkins/workspace \
         pollen-metrology/jenkins_slave_v3 \
-        -url https://jenkins.pollen-metrology.com/ \
+        -url [master server] \
         -workDir=/home/jenkins/agent \
         <agent secret hash> \
         <agent name>
