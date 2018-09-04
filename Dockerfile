@@ -75,7 +75,7 @@ RUN apt install -y g++-5 cmake lsb-core doxygen lcov valgrind
 
 # Install last fresh cppcheck binary
 RUN apt install -y libpcre3-dev
-RUN cd / tmp && wget https://github.com/danmar/cppcheck/archive/1.82.tar.gz;  \
+RUN cd /tmp && wget https://github.com/danmar/cppcheck/archive/1.82.tar.gz;  \
 	tar zxvf 1.82.tar.gz && \
 	cd cppcheck-1.82 && \
 	make SRCDIR=build CFGDIR=/usr/bin/cfg HAVE_RULES=yes && \
