@@ -21,7 +21,7 @@
 #  THE SOFTWARE.
 
 FROM ubuntu:18.04
-MAINTAINER Thibault Friedrich <thibault.friedrich@pollen-metrology.com>
+MAINTAINER Pollen Metrology <admin-team@pollen-metrology.com>
 
 # https://docs.docker.com/get-started/part2/#build-the-app
 # https://github.com/shufo/jenkins-slave-ubuntu/blob/master/Dockerfile
@@ -69,12 +69,6 @@ RUN apt-get install -y software-properties-common gcc-7 g++-7 cmake lsb-core dox
 	update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-7 60 && \
 	update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-7 60
 
-# Install LaTex environment needed for documentation compilation
-#RUN apt install -y texlive texlive-base texlive-bibtex-extra texlive-binaries texlive-extra-utils \
-#texlive-font-utils texlive-fonts-recommended texlive-generic-extra texlive-generic-recommended \
-#texlive-lang-french texlive-latex-base texlive-latex-extra texlive-latex-recommended \
-#texlive-pictures texlive-pstricks texlive-science biber latexmk
-
 # Install node
 RUN curl -sL https://deb.nodesource.com/setup_8.x | bash -
 RUN apt install -y nodejs
@@ -121,7 +115,7 @@ WORKDIR /home/jenkins
 RUN mkdir -p /home/pollen && chown jenkins:jenkins /home/pollen && ln -s /home/pollen /pollen
 
 # If you put this label at the beginning of the Dockerfile, docker seems to use cache and build fails more often
-LABEL Description="This is a base image, which provides the Jenkins agent executable (slave.jar)" Vendor="Jenkins project" Version="3.15"
+LABEL Description="This is a base image, which provides the Jenkins agent executable (slave.jar)" Vendor="Jenkins project" Version="4.0"
 
 # Set the locale
 RUN locale-gen en_US.UTF-8
@@ -129,6 +123,9 @@ ENV LANG en_US.UTF-8
 ENV LANGUAGE en_US:en
 ENV LC_ALL en_US.UTF-8
 
+# Install merge-xml-coverage.py
+RUN curl --create-dirs -sSLo /usr/bin/merge-xml-coverage.py https://gist.githubusercontent.com/tgsoverly/ef975d5b430fbce1eb33/raw/a4836655814bf09ac34bd42a6dd99f37aea7265d/merge-xml-coverage.py \
+	&& chmod 755 /usr/bin/merge-xml-coverage.py
 
 COPY jenkins-slave.sh /usr/bin/jenkins-slave.sh
 RUN chmod +x /usr/bin/jenkins-slave.sh
