@@ -75,17 +75,6 @@ RUN apt-get install -y software-properties-common gcc-7 g++-7 cmake lsb-core dox
 #texlive-lang-french texlive-latex-base texlive-latex-extra texlive-latex-recommended \
 #texlive-pictures texlive-pstricks texlive-science biber latexmk
 
-# Install last fresh cppcheck binary
-RUN apt install -y libpcre3-dev
-RUN cd /tmp && wget https://github.com/danmar/cppcheck/archive/1.82.tar.gz;  \
-	tar zxvf 1.82.tar.gz && \
-	cd cppcheck-1.82 && \
-	make SRCDIR=build CFGDIR=/usr/bin/cfg HAVE_RULES=yes && \
-	make install PREFIX=/usr CFGDIR=/usr/share/cppcheck/ && \
-	cd .. && \
-	rm -rf 1.82.tar.gz cppcheck-1.82
-
-
 # Install node
 RUN curl -sL https://deb.nodesource.com/setup_8.x | bash -
 RUN apt install -y nodejs
