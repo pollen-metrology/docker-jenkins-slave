@@ -105,7 +105,6 @@ RUN curl --create-dirs -sSLo /usr/share/jenkins/slave.jar https://repo.jenkins-c
   && chmod 644 /usr/share/jenkins/slave.jar
 
 # USER jenkins
-ENV AGENT_WORKDIR=${AGENT_WORKDIR}
 RUN mkdir /home/jenkins/.jenkins && mkdir -p ${AGENT_WORKDIR}
 
 VOLUME /home/jenkins/.jenkins
@@ -122,6 +121,12 @@ RUN locale-gen en_US.UTF-8
 ENV LANG en_US.UTF-8
 ENV LANGUAGE en_US:en
 ENV LC_ALL en_US.UTF-8
+
+ENV JENKINS_AGENT_WORKDIR=${AGENT_WORKDIR}
+ENV JENKINS_AGENT_NAME "NOT SET"
+ENV JENKINS_SECRET "NOT SET"
+ENV JENKINS_URL "NOT SET"
+
 
 # Install merge-xml-coverage.py
 RUN curl --create-dirs -sSLo /usr/bin/merge-xml-coverage.py https://gist.githubusercontent.com/tgsoverly/ef975d5b430fbce1eb33/raw/a4836655814bf09ac34bd42a6dd99f37aea7265d/merge-xml-coverage.py \
