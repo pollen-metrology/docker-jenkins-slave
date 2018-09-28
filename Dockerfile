@@ -105,7 +105,6 @@ RUN curl --create-dirs -sSLo /usr/share/jenkins/slave.jar https://repo.jenkins-c
   && chmod 644 /usr/share/jenkins/slave.jar
 
 # USER jenkins
-RUN mkdir /etc/sudoers.d/
 RUN echo "jenkins ALL = NOPASSWD : /usr/bin/apt-get" >> /etc/sudoers.d/jenkins-can-install 
 RUN mkdir /home/jenkins/.jenkins && mkdir -p ${AGENT_WORKDIR}
 
