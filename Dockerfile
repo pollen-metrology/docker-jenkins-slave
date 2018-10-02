@@ -65,7 +65,7 @@ libgl1-mesa-dev libglapi-mesa libsm-dev libx11-dev libxext-dev \
 libxt-dev libglu1-mesa-dev
 
 # Install compilation utilities
-RUN apt-get install -y software-properties-common gcc-7 g++-7 cmake lsb-core doxygen lcov valgrind && \
+RUN apt-get install -y software-properties-common gcc-7 g++-7 cmake lsb-core doxygen lcov gcovr valgrind && \
 	update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-7 60 && \
 	update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-7 60
 
