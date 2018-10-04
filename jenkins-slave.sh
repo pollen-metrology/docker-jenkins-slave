@@ -29,7 +29,7 @@
 # * JENKINS_SECRET : agent secret, if not set as an argument
 # * JENKINS_AGENT_NAME : agent name, if not set as an argument
 # * JENKINS_AGENT_WORKDIR : agent work directory, if not set by optional parameter -workDir
-
+# * SONAR_URL : used to download the cpp build wrapper
 
 chown -R jenkins /home/jenkins
 
@@ -39,6 +39,11 @@ if [ $# -eq 1 ]; then
 	exec "$@"
 
 else
+	# SonarQube stuff
+	if [ ! -z "$SONAR_URL" ]; then
+		cd /home/sonar
+		
+	fi
 
 	# Special case to let a jenkins container running on the same host as the artifactory container talk to it.
 	if (host artifactory 2>/dev/null | grep 'artifactory has address' > /dev/null)
