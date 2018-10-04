@@ -29,7 +29,7 @@ MAINTAINER Pollen Metrology <admin-team@pollen-metrology.com>
 # https://github.com/jenkinsci/docker-jnlp-slave
 
 RUN apt-get clean
-RUN apt update
+RUN apt-get update
 
 # Install JDK latest edition
 RUN apt install -y --no-install-recommends default-jdk
@@ -127,7 +127,14 @@ ENV JENKINS_AGENT_WORKDIR=${AGENT_WORKDIR}
 ENV JENKINS_AGENT_NAME "NOT SET"
 ENV JENKINS_SECRET "NOT SET"
 ENV JENKINS_URL "NOT SET"
+ENV SONAR_URL "NOT SET"
 
+# Install SonarQube client
+RUN apt install unzip
+RUN mkdir /home/sonarqube
+RUN curl --create-dirs -sSLo /home/sonarqube/sonar-scanner-cli-3.2.0.1227-linux.zip \
+         https://sonarsource.bintray.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-3.2.0.1227-linux.zip
+RUN cd /home/sonarqube && unzip -a sonar-scanner-cli-3.2.0.1227-linux.zip && rm sonar-scanner-cli-3.2.0.1227-linux.zip
 
 # Install merge-xml-coverage.py
 RUN curl --create-dirs -sSLo /usr/bin/merge-xml-coverage.py https://gist.githubusercontent.com/tgsoverly/ef975d5b430fbce1eb33/raw/a4836655814bf09ac34bd42a6dd99f37aea7265d/merge-xml-coverage.py \
