@@ -21,7 +21,13 @@
 #  THE SOFTWARE.
 
 FROM ubuntu:16.04
-MAINTAINER Thibault Friedrich <thibault.friedrich@pollen-metrology.com>
+MAINTAINER Pollen Metrology <admin-team@pollen-metrology.com>
+
+ARG VERSION=3.28
+ARG user=jenkins
+ARG group=jenkins
+ARG uid=2222
+ARG AGENT_WORKDIR=/home/jenkins/agent
 
 # https://docs.docker.com/get-started/part2/#build-the-app
 # https://github.com/shufo/jenkins-slave-ubuntu/blob/master/Dockerfile
@@ -41,7 +47,8 @@ RUN apt install -y git wget curl python-virtualenv python-pip build-essential py
 RUN apt install -y libeigen3-dev libxt-dev libtiff-dev libpng-dev libjpeg-dev libopenblas-dev \
 	xvfb libusb-dev
 
-RUN python -m pip install --upgrade pip conan
+# Conan now needs Python 3 (and is not needed in this flavour)
+# RUN python -m pip install --upgrade pip conan
 
 # QT5 development
 RUN apt install -y qttools5-dev-tools libqt5opengl5-dev libqt5svg5-dev \
@@ -87,24 +94,8 @@ RUN cd / tmp && wget https://github.com/danmar/cppcheck/archive/1.82.tar.gz;  \
 	cd .. && \
 	rm -rf 1.82.tar.gz cppcheck-1.82
 
-
-# Install node
-RUN curl -sL https://deb.nodesource.com/setup_8.x | bash -
-RUN apt install -y nodejs
-
-# Install yarn
-RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add -
-RUN echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list
-RUN apt update && apt install -y yarn
-
-# Install chrome
-RUN apt install -y chromium-browser
-RUN update-alternatives --install /usr/bin/chrome chrome-browser /usr/bin/chromium-browser 100
-
-#### CHECK
-
 # Add user jenkins to the image
-RUN adduser --system --quiet --uid 2222 --group --disabled-login jenkins
+RUN adduser --system --quiet --uid ${uid} --group --disabled-login jenkins
 
 # Install Phabricator-related tools
 RUN apt install -y php7.0-cli php7.0-curl
@@ -116,8 +107,6 @@ RUN cd /home/phabricator && git clone https://github.com/phacility/libphutil.git
 RUN mv /home/phabricator/arcanist/bin/arc.bat /home/phabricator/arcanist/bin/arc.bat.old
 RUN ln -s /home/phabricator/arcanist/bin/arc /usr/bin/arc.bat
 
-ARG VERSION=3.15
-ARG AGENT_WORKDIR=/home/jenkins/agent
 
 RUN curl --create-dirs -sSLo /usr/share/jenkins/slave.jar https://repo.jenkins-ci.org/public/org/jenkins-ci/main/remoting/${VERSION}/remoting-${VERSION}.jar \
   && chmod 755 /usr/share/jenkins \
@@ -134,7 +123,7 @@ WORKDIR /home/jenkins
 RUN mkdir -p /home/pollen && chown jenkins:jenkins /home/pollen && ln -s /home/pollen /pollen
 
 # If you put this label at the beginning of the Dockerfile, docker seems to use cache and build fails more often
-LABEL Description="This is a base image, which provides the Jenkins agent executable (slave.jar)" Vendor="Jenkins project" Version="3.15"
+LABEL Description="This is a base image, which provides the Jenkins agent executable (slave.jar)" Vendor="Jenkins project" Version="1.2"
 
 # Set the locale
 RUN locale-gen en_US.UTF-8
