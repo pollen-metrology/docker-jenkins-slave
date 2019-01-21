@@ -28,6 +28,9 @@ MAINTAINER Pollen Metrology <admin-team@pollen-metrology.com>
 # https://github.com/jenkinsci/docker-slave
 # https://github.com/jenkinsci/docker-jnlp-slave
 
+ARG VERSION=3.28
+ARG AGENT_WORKDIR=/home/jenkins/agent
+
 RUN apt-get clean
 RUN apt update
 
@@ -65,7 +68,7 @@ libgl1-mesa-dev libglapi-mesa libsm-dev libx11-dev libxext-dev \
 libxt-dev libglu1-mesa-dev
 
 # Install compilation utilities
-RUN apt-get install -y software-properties-common gcc-7 g++-7 cmake lsb-core doxygen cppcheck clang-format lcov gcovr valgrind && \
+RUN apt-get install -y software-properties-common gcc-7 g++-7 cmake lsb-core doxygen clang-format lcov gcovr valgrind && \
 	update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-7 60 && \
 	update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-7 60
 
@@ -97,8 +100,17 @@ RUN cd /home/phabricator && git clone https://github.com/phacility/libphutil.git
 RUN mv /home/phabricator/arcanist/bin/arc.bat /home/phabricator/arcanist/bin/arc.bat.old
 RUN ln -s /home/phabricator/arcanist/bin/arc /usr/bin/arc.bat
 
-ARG VERSION=3.15
-ARG AGENT_WORKDIR=/home/jenkins/agent
+
+# Install last fresh cppcheck binary
+RUN apt install -y libpcre3-dev unzip
+RUN cd /tmp && mkdir cppcheck && wget https://github.com/danmar/cppcheck/archive/1.86.zip ;  \
+	unzip -a 1.86.zip && \
+	cd cppcheck-1.86 && \
+	make -j4 SRCDIR=build CFGDIR=/usr/bin/cfg HAVE_RULES=yes CXXFLAGS="-O2 -DNDEBUG -Wall -Wno-sign-compare -Wno-unused-function" && \
+	make install PREFIX=/usr CFGDIR=/usr/share/cppcheck/ && \
+	cd /tmp && \
+	rm -rf cppcheck
+
 
 RUN curl --create-dirs -sSLo /usr/share/jenkins/slave.jar https://repo.jenkins-ci.org/public/org/jenkins-ci/main/remoting/${VERSION}/remoting-${VERSION}.jar \
   && chmod 755 /usr/share/jenkins \
