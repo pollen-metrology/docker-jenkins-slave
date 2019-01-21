@@ -30,9 +30,6 @@ sudo docker run  \
 * install java, download slave.jar and connect to jenkins server
 * install python dependencies
 * install g++ compiler and cmake
-* install latex libraries
-* install node (v8.x)
-* install yarn (last version)
 
 ## More
 
