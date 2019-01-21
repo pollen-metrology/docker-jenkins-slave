@@ -79,20 +79,20 @@ libxt-dev libglu1-mesa-dev
 RUN apt install -y g++-5 cmake lsb-core doxygen lcov
 
 # Install LaTex environment needed for documentation compilation
-RUN apt install -y texlive texlive-base texlive-bibtex-extra texlive-binaries texlive-extra-utils \
-texlive-font-utils texlive-fonts-recommended texlive-generic-extra texlive-generic-recommended \
-texlive-lang-french texlive-latex-base texlive-latex-extra texlive-latex-recommended \
-texlive-pictures texlive-pstricks texlive-science biber latexmk
+#RUN apt install -y texlive texlive-base texlive-bibtex-extra texlive-binaries texlive-extra-utils \
+#texlive-font-utils texlive-fonts-recommended texlive-generic-extra texlive-generic-recommended \
+#texlive-lang-french texlive-latex-base texlive-latex-extra texlive-latex-recommended \
+#texlive-pictures texlive-pstricks texlive-science biber latexmk
 
 # Install last fresh cppcheck binary
-RUN apt install -y libpcre3-dev
-RUN cd / tmp && wget https://github.com/danmar/cppcheck/archive/1.82.tar.gz;  \
-	tar zxvf 1.82.tar.gz && \
-	cd cppcheck-1.82 && \
-	make SRCDIR=build CFGDIR=/usr/bin/cfg HAVE_RULES=yes && \
+RUN apt install -y libpcre3-dev unzip
+RUN cd /tmp && mkdir cppcheck && wget https://github.com/danmar/cppcheck/archive/1.86.zip ;  \
+	unzip -a 1.86.zip && \
+	cd cppcheck-1.86 && \
+	make -j4 SRCDIR=build CFGDIR=/usr/bin/cfg HAVE_RULES=yes CXXFLAGS="-O2 -DNDEBUG -Wall -Wno-sign-compare -Wno-unused-function" && \
 	make install PREFIX=/usr CFGDIR=/usr/share/cppcheck/ && \
-	cd .. && \
-	rm -rf 1.82.tar.gz cppcheck-1.82
+	cd /tmp && \
+	rm -rf cppcheck
 
 # Add user jenkins to the image
 RUN adduser --system --quiet --uid ${uid} --group --disabled-login jenkins
