@@ -86,11 +86,11 @@ RUN apt install -y g++-5 cmake lsb-core doxygen lcov
 
 # Install last fresh cppcheck binary
 RUN apt install -y libpcre3-dev unzip
-RUN cd /tmp && mkdir cppcheck && wget https://github.com/danmar/cppcheck/archive/1.86.zip ;  \
-	unzip -a 1.86.zip && \
-	cd cppcheck-1.86 && \
-	make -j4 SRCDIR=build CFGDIR=/usr/bin/cfg HAVE_RULES=yes CXXFLAGS="-O2 -DNDEBUG -Wall -Wno-sign-compare -Wno-unused-function" && \
-	make install PREFIX=/usr CFGDIR=/usr/share/cppcheck/ && \
+RUN cd /tmp && mkdir cppcheck && wget https://github.com/danmar/cppcheck/archive/1.89.zip ;  \
+	unzip -a 1.89.zip && \
+	cd cppcheck-1.89 && \
+	make -j4 SRCDIR=build FILESDIR=/usr/bin/cfg HAVE_RULES=yes CXXFLAGS="-O2 -DNDEBUG -Wall -Wno-sign-compare -Wno-unused-function" && \
+	make install PREFIX=/usr FILESDIR=/usr/share/cppcheck/ && \
 	cd /tmp && \
 	rm -rf cppcheck
 
